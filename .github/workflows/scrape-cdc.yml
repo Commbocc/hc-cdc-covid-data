@@ -17,12 +17,12 @@ on:
     - cron: '0 */12 * * *' # every 12 hour
 
 jobs:
-  build-and-deploy:
+  scrape-cdc:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v2.3.1
+        uses: actions/checkout@v2
 
       - name: Scrape Data 🔧
         run: ruby src/scrape-cdc.rb
