@@ -1,0 +1,34 @@
+name: Scrape CDC
+on:
+  push:
+    branches:
+      - master
+
+  schedule:
+    # ┌───────────── minute (0 - 59)
+    # │ ┌───────────── hour (0 - 23)
+    # │ │ ┌───────────── day of the month (1 - 31)
+    # │ │ │ ┌───────────── month (1 - 12 or JAN-DEC)
+    # │ │ │ │ ┌───────────── day of the week (0 - 6 or SUN-SAT)
+    # │ │ │ │ │
+    # * * * * *
+
+    # * is a special character in YAML so you have to quote this string
+    - cron: '0 */12 * * *' # every 12 hour
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2.3.1
+
+      - name: Scrape Data 🔧
+        run: ruby src/scrape-cdc.rb
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: public # The folder the action should deploy.
