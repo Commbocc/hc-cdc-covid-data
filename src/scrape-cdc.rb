@@ -1,5 +1,6 @@
 require 'net/http'
 require 'json'
+require 'time'
 
 puts 'Scraping data'
 
@@ -12,7 +13,7 @@ filtered = data['integrated_county_timeseries_external_data']
 .sort_by { |x| x['date'] }
 
 result = {
-    updated_at: Time.new,
+    updated_at: Time.now.utc.iso8601,
     data: filtered
 }
 
